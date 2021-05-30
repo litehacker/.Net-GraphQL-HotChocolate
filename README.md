@@ -1,4 +1,57 @@
 # .Net-GraphQL-HotChocolate
+## Motivation for GraphQL
+To add a new API call you don’t need to rewrite it on backend.
+Technology undefended Node, Go, Scala etc… No matter how the RestAPI was written, you just consume the API.
+
+### Requirements For Frontend 
+
+Architect to make GraphQL work with ReactJS. Which client library do we choose. Apollo is dominating GraphQL client environment. Cash on Client’s side should be improved.  
+! Do not fatch all data at once. Try to catch step by step in order to have fast responses 
+
+### How GraphQL works
+Graphical = GraphQL IDE
+Sending “graphical document” to server, sever executes, sends back JSON
+Having ability to explore graph of data types.
+Querying.
+
+* Request (GraphQL doc) -> Response (JSON)
+* Language Specification
+* Schema
+* Server implementation
+
+### What GraphQL is not
+* ! Client-side state management
+* ! Good for streaming
+* ! Facebook Graph APII
+* ! Limited to specific DB (no DB needed)
+* ! Limited to JS/NodeJS on Backend
+* ! Limited to React/Web
+* ! Limited to HTTP (transport layers)
+
+### GraphQL Functionality
+* Query - Read  
+* Mutation - Write  
+* Subscription - Observe Event, creates  a persistent connection between the client and server. Whenever specific event triggers, and data is pushed back to the client. Needed to build ChatApp, Transportation, Communication apps.
+
+Syntax:
+```
+query GetBooksForAuthor($id: ID!){
+	author(id:$id){
+		name,
+		nationality,
+		books{
+			title
+			isbn
+		}
+	}
+}
+```
+### Modern Challenges
+Efficiency: 
+
+* Overfetching- contains too much data
+* Underfetching- not enough data at one req
+
 
 ## Requirements for the project
 * VS Code (Recommended)
@@ -15,6 +68,7 @@
     * Microsoft EntityFWCore package - `dotnet add package Microsoft.EntityframeworkCore.Design`
     * Microsoft EntityFWCore for SQL Server - `dotnet add package Microsoft.EntityframeworkCore.SqlServer`
     * (Optional) Graphical Interface to view GraphQL Schema `dotnet add package GraphQL.Server.Ui.Voyager`
+    * Will be needed later `dotnet tool install --global dotnet-ef`
 
 4. Setting up SQL Server. 
     Setup with Docker (should be installed). In the repo there is `docker-compose.yaml` already. If not : 
@@ -38,5 +92,29 @@
     * user: `sa`
     * password: `@sdf1234` (in this case)
 
-##
+## Database
+It is assumed that you got the code files properly. `dotnet run` compiles and runs the script. `http://localhost:5000/graphql/` is the location of GraphQL GUI kinda thing, where you can query. Before querying add some data into `Platform` table:
+```sql
+SET IDENTITY_INSERT Platforms ON
 
+INSERT INTO Platforms
+   ([Id],[Name],[LicenseKey])
+VALUES
+   ( 1, N'Jared', N'123'),
+   ( 2, N'Nikita', N'234'),
+   ( 3, N'Tom', N'345'),
+   ( 4, N'Jake', N'456')
+GO
+
+```
+In order to get alist of `Platforms` table run sample query:
+```
+query{
+  platform{
+    id,
+    name
+  }
+}
+```
+
+[Source](https://www.youtube.com/watch?v=HuN94qNwQmM)
