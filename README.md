@@ -86,13 +86,14 @@ Efficiency:
     ```
     Get to the directory containing the `docker-compose.yaml` file. Run `docker-compose up -d` . After this operation you will have a new image in your docker. To stop Docker run `docker-compose stop`. Optional to install [SQL Server](https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql) extension for VS Code.  
     Configuraitons of the extension:  
-    * connection: `localhos,1433`
+    * connection: `localhost,1433`
     * database : [enter]
     * Authentication Type SQL Login
     * user: `sa`
     * password: `@sdf1234` (in this case)
 
 ## Database
+Needed to install `dotnet tool install --global dotnet-ef`. If you have no `/Migrations` directory inside `/Project` migrate with `dotnet ef migrations add AddPlatformToDB` command. If you have the migrations folder already, just updating DB with `dotnet ef database update`.  
 It is assumed that you got the code files properly. `dotnet run` compiles and runs the script. `http://localhost:5000/graphql/` is the location of GraphQL GUI kinda thing, where you can query. Before querying add some data into `Platform` table:
 ```sql
 SET IDENTITY_INSERT Platforms ON
